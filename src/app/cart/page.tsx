@@ -6,7 +6,7 @@ const product: ProductType = {
   name: "Product",
   description: "Product sample description",
   id: 10,
-  img: "/assets/test.jpg",
+  image: "/assets/test.jpg",
   price: 9.99,
 };
 

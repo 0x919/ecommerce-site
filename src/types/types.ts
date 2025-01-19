@@ -3,7 +3,7 @@ export interface ProductType {
   name: string;
   price: number;
   description: string;
-  img: string;
+  image: string;
 }
 
 export type ProductProps = {

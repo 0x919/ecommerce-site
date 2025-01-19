@@ -5,7 +5,7 @@ export default function CartItem({ product }: ProductProps) {
   return (
     <div className="bg-base-300 rounded-lg p-3 flex">
       <div className="relative w-20 h-20 rounded overflow-hidden mr-5">
-        <Image src={product.img} alt={product.name} fill sizes="100vw"></Image>
+        <Image src={product.image} alt={product.name} fill sizes="100vw"></Image>
       </div>
       <div className="flex-1">
         <h1 className="text-2xl font-bold">{product.name}</h1>
