@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Product from "@/components/Product";
-import { ProductType } from "@/types/types";
+import { ProductType } from "@/lib/types";
 
 const product: ProductType = {
   name: "Product",

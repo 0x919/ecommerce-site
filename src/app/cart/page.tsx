@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { ProductType } from "@/types/types";
+import { ProductType } from "@/lib/types";
 import CartItem from "@/components/CartItem";
 
 const product: ProductType = {

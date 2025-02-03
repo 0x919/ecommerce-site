@@ -1,4 +1,4 @@
-import { ProductProps } from "@/types/types";
+import { ProductProps } from "@/lib/types";
 import Image from "next/image";
 
 export default function Product({ product }: ProductProps) {
