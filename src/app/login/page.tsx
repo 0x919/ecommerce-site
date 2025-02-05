@@ -2,26 +2,27 @@
 
 import Header from "@/components/Header";
 import axios, { AxiosError } from "axios";
-import { redirect } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
       setError(null);
 
-      const response = await axios.post("/api/auth/login", {
+      await axios.post("/api/auth/login", {
         email,
         password,
       });
-      console.log(response);
+      router.push("/");
     } catch (error) {
       if (error instanceof AxiosError && error.response && error.response.data) {
-        setError(error.response.data.message || "Something went wrong");
+        setError(error.response.data.error || "Something went wrong");
       } else {
         setError("Something went wrong. Please try again.");
       }
@@ -37,13 +38,23 @@ export default function Register() {
             <label htmlFor="email" className="block font-semibold mb-1">
               Your email
             </label>
-            <input type="email" placeholder="name@company.com" className="input mb-5" onChange={(e) => setEmail(e.target.value)} />
+            <input
+              type="email"
+              placeholder="name@company.com"
+              className="input mb-5"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div>
             <label htmlFor="password" className="block font-semibold mb-1">
               Password
             </label>
-            <input type="password" placeholder="••••••••" className="input mb-10" onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="input mb-10"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <button className="btn btn-primary px-10" onClick={handleLogin}>
             Login

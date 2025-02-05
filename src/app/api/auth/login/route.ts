@@ -1,11 +1,8 @@
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { loginSchema } from "@/lib/schemas";
-import { NextRequest } from "next/server";
-
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+import { NextRequest, NextResponse } from "next/server";
+import { generateTokens } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,11 +28,24 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "Wrong password" }, { status: 401 });
     }
 
-    const payload = { id: user.id, email: user.email, role: user.role };
-    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET!, { expiresIn: "30m" });
-    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET!, { expiresIn: "7d" });
+    const tokens = generateTokens(user);
 
-    return Response.json({ accessToken, refreshToken });
+    const response = NextResponse.json({ message: "Logged in!" });
+
+    response.cookies.set("accessToken", tokens.accessToken, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+      maxAge: 15 * 60,
+    });
+    response.cookies.set("refreshToken", tokens.refreshToken, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60,
+    });
+
+    return response;
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
