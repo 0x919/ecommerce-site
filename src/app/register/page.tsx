@@ -5,17 +5,23 @@ import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<null | string>(null);
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       setError(null);
 
-      await axios.post("/api/auth/login", {
+      if (password !== repeatPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+
+      await axios.post("/api/auth/register", {
         email,
         password,
       });
@@ -29,12 +35,13 @@ export default function Login() {
       }
     }
   };
+
   return (
     <div>
       <Header />
       <div className="flex justify-center items-center h-screen">
         <div className="bg-base-300 py-[20px] w-[500px] flex flex-col items-center justify-center rounded-xl">
-          <h1 className="text-3xl font-semibold mb-8">Login to your account</h1>
+          <h1 className="text-3xl font-semibold mb-8">Register your account</h1>
           <div className="">
             <label htmlFor="email" className="block font-semibold mb-1">
               Your email
@@ -53,12 +60,23 @@ export default function Login() {
             <input
               type="password"
               placeholder="••••••••"
-              className="input mb-10"
+              className="input mb-5"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="btn btn-primary px-10" onClick={handleLogin}>
-            Login
+          <div>
+            <label htmlFor="password" className="block font-semibold mb-1">
+              Repeat Password
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="input mb-10"
+              onChange={(e) => setRepeatPassword(e.target.value)}
+            />
+          </div>
+          <button className="btn btn-primary px-10" onClick={handleRegister}>
+            Register
           </button>
           {error && <p className="text-red-600">{error}</p>}
         </div>

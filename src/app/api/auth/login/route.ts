@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { loginSchema } from "@/lib/schemas";
 import { NextRequest, NextResponse } from "next/server";
-import { generateTokens } from "@/lib/auth";
+import { generateToken } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,17 +28,11 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "Wrong password" }, { status: 401 });
     }
 
-    const tokens = generateTokens(user);
+    const token = generateToken(user);
 
     const response = NextResponse.json({ message: "Logged in!" });
 
-    response.cookies.set("accessToken", tokens.accessToken, {
-      httpOnly: true,
-      path: "/",
-      sameSite: "strict",
-      maxAge: 15 * 60,
-    });
-    response.cookies.set("refreshToken", tokens.refreshToken, {
+    response.cookies.set("accessToken", token, {
       httpOnly: true,
       path: "/",
       sameSite: "strict",

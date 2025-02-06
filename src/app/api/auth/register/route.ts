@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { generateToken } from "@/lib/auth";
 import { registerSchema } from "@/lib/schemas";
 
 export async function POST(req: NextRequest) {
@@ -27,7 +28,18 @@ export async function POST(req: NextRequest) {
     const newUser = { email, passwordHash, role: "user" };
     const user = await prisma.user.create({ data: newUser });
 
-    return Response.json({ user });
+    const token = generateToken(user);
+
+    const response = NextResponse.json({ message: "Account registered!" });
+
+    response.cookies.set("accessToken", token, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60,
+    });
+
+    return response;
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
