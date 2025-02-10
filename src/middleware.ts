@@ -5,8 +5,16 @@ export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const token = req.cookies.get("accessToken")?.value;
 
+  if (pathname.startsWith("/api/auth/register") || pathname.startsWith("/api/auth/login")) {
+    return NextResponse.next();
+  }
+
   if (!token) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    if (pathname.startsWith("/api")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   try {
@@ -16,15 +24,18 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    req.user = decoded;
-
-    return NextResponse.next();
-  } catch (error) {
-    console.log(error);
-    return NextResponse.redirect(new URL("/login", req.url));
+    const response = NextResponse.next();
+    response.headers.set("x-user", JSON.stringify(decoded));
+    return response;
+  } catch {
+    if (pathname.startsWith("/api")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 }
 
 export const config = {
-  matcher: ["/cart", "/profile", "/admin/:path"],
+  matcher: ["/cart", "/profile", "/api/:path", "/admin/:path"],
 };
