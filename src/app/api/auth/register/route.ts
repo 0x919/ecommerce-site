@@ -28,12 +28,13 @@ export async function POST(req: NextRequest) {
     const newUser = { email, passwordHash, role: "user" };
     const user = await prisma.user.create({ data: newUser });
 
-    const token = generateToken(user);
+    const token = await generateToken(user);
 
     const response = NextResponse.json({ message: "Account registered!" });
 
     response.cookies.set("accessToken", token, {
       httpOnly: true,
+      secure: true,
       path: "/",
       sameSite: "strict",
       maxAge: 7 * 24 * 60,
