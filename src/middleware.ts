@@ -5,10 +5,6 @@ export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const token = req.cookies.get("accessToken")?.value;
 
-  if (pathname.startsWith("/api/auth/register") || pathname.startsWith("/api/auth/login")) {
-    return NextResponse.next();
-  }
-
   if (!token) {
     if (pathname.startsWith("/api")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -25,7 +21,7 @@ export default async function middleware(req: NextRequest) {
     }
 
     const response = NextResponse.next();
-    response.headers.set("x-user", JSON.stringify(decoded));
+    response.headers.set("user", JSON.stringify(decoded));
     return response;
   } catch {
     if (pathname.startsWith("/api")) {
@@ -37,5 +33,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/cart", "/profile", "/api/:path", "/admin/:path"],
+  matcher: ["/cart", "/profile", "/api/profile", "/api/products", "/admin"],
 };
