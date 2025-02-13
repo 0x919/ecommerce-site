@@ -3,7 +3,9 @@ import Product from "@/components/Product";
 import { ProductType } from "@/lib/types";
 
 export default async function Home() {
-  const response = await fetch(`${process.env.BASE_URL}/api/products`);
+  const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/products`);
+  return <div>{baseUrl}</div>;
 
   if (!response.ok) {
     console.error("Failed to fetch products");
