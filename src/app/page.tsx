@@ -1,11 +1,16 @@
 import Header from "@/components/Header";
 import Product from "@/components/Product";
 import { ProductType } from "@/lib/types";
-import axios from "axios";
 
 export default async function Home() {
-  const response = await axios.get(`${process.env.BASE_URL}/api/products`);
-  const products: ProductType[] = response.data;
+  const response = await fetch(`${process.env.BASE_URL}/api/products`);
+
+  if (!response.ok) {
+    console.error("Failed to fetch products");
+    return <div>Error loading products</div>;
+  }
+
+  const products: ProductType[] = await response.json();
 
   return (
     <div>
