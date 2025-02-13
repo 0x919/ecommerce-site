@@ -1,22 +1,20 @@
 import Header from "@/components/Header";
 import Product from "@/components/Product";
 import { ProductType } from "@/lib/types";
+import axios from "axios";
 
-const product: ProductType = {
-  name: "Product",
-  description: "Product sample description",
-  id: 10,
-  image: "/assets/test.jpg",
-  price: 9.99,
-};
+export default async function Home() {
+  const response = await axios.get("http://localhost:3000/api/products");
+  const products: ProductType[] = response.data;
 
-export default function Home() {
   return (
     <div>
       <Header />
       <div className="mt-[200px] px-5">
-        <div>
-          <Product product={product} />
+        <div className="flex flex-wrap justify-center gap-10">
+          {products.map((product) => (
+            <Product key={product.id} product={product} />
+          ))}
         </div>
       </div>
     </div>
