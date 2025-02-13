@@ -5,11 +5,10 @@ import { ProductType } from "@/lib/types";
 export default async function Home() {
   const baseUrl = process.env.BASE_URL || "http://localhost:3000";
   const response = await fetch(`${baseUrl}/api/products`);
-  return <div>{baseUrl}</div>;
 
   if (!response.ok) {
-    console.error("Failed to fetch products");
-    return <div>Error loading products</div>;
+    console.error("Failed to fetch products: ", response);
+    return <div>Error loading products: {await response.text()}</div>;
   }
 
   const products: ProductType[] = await response.json();
