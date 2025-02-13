@@ -4,7 +4,7 @@ import { ProductType } from "@/lib/types";
 import axios from "axios";
 
 export default async function Home() {
-  const response = await axios.get("http://localhost:3000/api/products");
+  const response = await axios.get(`${process.env.BASE_URL}/api/products`);
   const products: ProductType[] = response.data;
 
   return (
