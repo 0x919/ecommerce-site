@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
-import Product from "@/components/Product";
-import { ProductType } from "@/lib/types";
+import ProductCard from "@/components/Product";
+import { Product } from "@prisma/client";
 
 export default async function Home() {
   const baseUrl = process.env.BASE_URL || "http://localhost:3000";
@@ -11,7 +11,7 @@ export default async function Home() {
     return <div>Error loading products: {await response.text()}</div>;
   }
 
-  const products: ProductType[] = await response.json();
+  const products: Product[] = await response.json();
 
   return (
     <div>
@@ -19,7 +19,7 @@ export default async function Home() {
       <div className="mt-[200px] px-5">
         <div className="flex flex-wrap justify-center gap-10">
           {products.map((product) => (
-            <Product key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

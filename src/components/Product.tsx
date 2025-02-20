@@ -1,7 +1,10 @@
+"use client";
+
 import { ProductProps } from "@/lib/types";
 import Image from "next/image";
+import { addToCart } from "@/lib/utils";
 
-export default function Product({ product }: ProductProps) {
+export default function ProductCard({ product }: ProductProps) {
   return (
     <div className="card bg-base-300 w-[300px] h-[400px] shadow-xl rounded-lg overflow-hidden">
       <div className="relative h-1/2 w-full">
@@ -13,7 +16,9 @@ export default function Product({ product }: ProductProps) {
       </div>
       <div className="p-5 flex justify-between">
         <p className="text-[30px] font-semibold">${product.price}</p>
-        <button className="btn btn-primary">Add to cart</button>
+        <button onClick={() => addToCart(product)} className="btn btn-primary">
+          Add to cart
+        </button>
       </div>
     </div>
   );

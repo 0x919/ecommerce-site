@@ -1,13 +1,15 @@
-export interface ProductType {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-}
+import { Product } from "@prisma/client";
 
 export type ProductProps = {
-  product: ProductType;
+  product: Product;
+};
+
+export interface CartProduct extends Product {
+  count: number;
+}
+
+export type CartProductProps = {
+  product: CartProduct;
 };
 
 export interface DecodedToken {
