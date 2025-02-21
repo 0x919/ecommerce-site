@@ -21,3 +21,8 @@ export interface DecodedToken {
   iat: number;
   exp: number;
 }
+
+export interface CartInfo {
+  length: number;
+  total: number;
+}

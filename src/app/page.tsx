@@ -9,7 +9,7 @@ import { getCartInfo } from "@/lib/utils";
 export default function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const [products, setProducts] = useState<Product[]>([]);
-  const [cartInfo, setCartInfo] = useState(getCartInfo());
+  const [cartInfo, setCartInfo] = useState({ length: 0, total: 0 });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,6 +22,9 @@ export default function Home() {
       setProducts(products);
     };
     fetchProducts();
+
+    const cartInfo = getCartInfo();
+    setCartInfo(cartInfo);
   }, [baseUrl]);
 
   const handleCartUpdate = () => {

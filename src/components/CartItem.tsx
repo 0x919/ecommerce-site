@@ -13,7 +13,7 @@ export default function CartItem({ product, onCartUpdate }: CartProductProps) {
         <p className="">{product.description}</p>
       </div>
       <div className="flex items-center sm:mr-5">
-        <div className="bg-primary text-black rounded-xl px-2 flex gap-3 mr-3">
+        <div className="bg-primary text-black rounded-xl px-2 flex justify-between gap-3 mr-3 w-[100px]">
           <button
             onClick={() => {
               lowerCartCount(product);
@@ -33,7 +33,7 @@ export default function CartItem({ product, onCartUpdate }: CartProductProps) {
           </button>
         </div>
         <div className="flex justify-between w-full">
-          <p className="mr-2 sm:mr-10 text-3xl font-semibold w-16">
+          <p className="mr-10 sm:mr-10 text-3xl font-semibold w-16">
             ${Math.round(product.price * product.count * 100) / 100}
           </p>
           <button
