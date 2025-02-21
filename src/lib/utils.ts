@@ -2,6 +2,8 @@ import { Product } from "@prisma/client";
 import { CartProduct } from "./types";
 
 export function addToCart(product: Product) {
+  if (typeof window === "undefined") return;
+
   const cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
 
   const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
@@ -15,6 +17,8 @@ export function addToCart(product: Product) {
 }
 
 export function getCartInfo() {
+  if (typeof window === "undefined") return { length: 0, total: 0 };
+
   const cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
   const length = cartItems.reduce((length, product) => length + product.count, 0);
   const total = cartItems.reduce((total, product) => {
@@ -25,11 +29,15 @@ export function getCartInfo() {
 }
 
 export function getCartItems() {
+  if (typeof window === "undefined") return [];
+
   const cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
   return cartItems;
 }
 
 export function lowerCartCount(product: CartProduct) {
+  if (typeof window === "undefined") return;
+
   let cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
 
   const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
@@ -44,6 +52,8 @@ export function lowerCartCount(product: CartProduct) {
 }
 
 export function removeFromCart(product: CartProduct) {
+  if (typeof window === "undefined") return;
+
   let cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
   cartItems = cartItems.filter((item) => item.id !== product.id);
   localStorage.setItem("cart", JSON.stringify(cartItems));

@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getCartInfo } from "@/lib/utils";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ export default function Register() {
 
   return (
     <div>
-      <Header />
+      <Header cartInfo={getCartInfo()} />
       <div className="flex justify-center items-center h-screen">
         <div className="bg-base-300 py-[20px] w-[500px] flex flex-col items-center justify-center rounded-xl">
           <h1 className="text-3xl font-semibold mb-8">Register your account</h1>
