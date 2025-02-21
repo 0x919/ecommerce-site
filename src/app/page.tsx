@@ -7,7 +7,7 @@ import { Product } from "@prisma/client";
 import { getCartInfo } from "@/lib/utils";
 
 export default function Home() {
-  const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const [products, setProducts] = useState<Product[]>([]);
   const [cartInfo, setCartInfo] = useState(getCartInfo());
 
