@@ -12,7 +12,6 @@ export function addToCart(product: Product) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cartItems));
-  window.location.reload();
 }
 
 export function getCartInfo() {
@@ -42,12 +41,10 @@ export function lowerCartCount(product: CartProduct) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cartItems));
-  window.location.reload();
 }
 
 export function removeFromCart(product: CartProduct) {
   let cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
   cartItems = cartItems.filter((item) => item.id !== product.id);
   localStorage.setItem("cart", JSON.stringify(cartItems));
-  window.location.reload();
 }

@@ -4,7 +4,7 @@ import { ProductProps } from "@/lib/types";
 import Image from "next/image";
 import { addToCart } from "@/lib/utils";
 
-export default function ProductCard({ product }: ProductProps) {
+export default function ProductCard({ product, onCartUpdate }: ProductProps) {
   return (
     <div className="card bg-base-300 w-[300px] h-[400px] shadow-xl rounded-lg overflow-hidden">
       <div className="relative h-1/2 w-full">
@@ -16,7 +16,13 @@ export default function ProductCard({ product }: ProductProps) {
       </div>
       <div className="p-5 flex justify-between">
         <p className="text-[30px] font-semibold">${product.price}</p>
-        <button onClick={() => addToCart(product)} className="btn btn-primary">
+        <button
+          onClick={() => {
+            addToCart(product);
+            onCartUpdate();
+          }}
+          className="btn btn-primary"
+        >
           Add to cart
         </button>
       </div>

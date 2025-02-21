@@ -1,17 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { getCartInfo } from "@/lib/utils";
-import { useState, useEffect } from "react";
 
-export default function Header() {
-  const [cartInfo, setCartInfo] = useState({ length: 0, total: 0 });
+interface HeaderProps {
+  cartInfo: { length: number; total: number };
+}
 
-  useEffect(() => {
-    const cart = getCartInfo();
-    setCartInfo(cart);
-  }, []);
-
+export default function Header({ cartInfo }: HeaderProps) {
   return (
     <header className="navbar bg-base-300">
       <div className="flex-1">
