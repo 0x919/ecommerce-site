@@ -4,13 +4,14 @@ import Header from "@/components/Header";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getCartInfo } from "@/lib/utils";
+import { useCart } from "@/hooks/useCart";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
   const router = useRouter();
+  const { cartInfo } = useCart();
 
   const handleLogin = async () => {
     try {
@@ -32,7 +33,7 @@ export default function Login() {
   };
   return (
     <div>
-      <Header cartInfo={getCartInfo()} />
+      <Header cartInfo={cartInfo} />
       <div className="flex justify-center items-center h-screen">
         <div className="bg-base-300 py-[20px] w-[500px] flex flex-col items-center justify-center rounded-xl">
           <h1 className="text-3xl font-semibold mb-8">Login to your account</h1>

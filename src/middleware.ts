@@ -24,6 +24,10 @@ export default async function middleware(req: NextRequest) {
   try {
     const decoded = await verifyToken(token);
 
+    if (["/login", "/register"].includes(pathname)) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+
     if (adminRoutes.some((route) => pathname === route) && decoded.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -41,5 +45,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/cart", "/profile", "/api/profile", "/api/products", "/admin"],
+  matcher: ["/cart", "/profile", "/api/profile", "/api/products", "/admin", "/login", "/register"],
 };

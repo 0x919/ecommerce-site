@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import ProductCard from "@/components/Product";
 import { Product } from "@prisma/client";
-import { getCartInfo } from "@/lib/utils";
+import { useCart } from "@/hooks/useCart";
 
 export default function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const [products, setProducts] = useState<Product[]>([]);
-  const [cartInfo, setCartInfo] = useState({ length: 0, total: 0 });
+  const { cartInfo, updateCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,15 +22,7 @@ export default function Home() {
       setProducts(products);
     };
     fetchProducts();
-
-    const cartInfo = getCartInfo();
-    setCartInfo(cartInfo);
   }, [baseUrl]);
-
-  const handleCartUpdate = () => {
-    const cart = getCartInfo(); // Assuming getCartInfo is defined in the utils file
-    setCartInfo(cart);
-  };
 
   return (
     <div>
@@ -38,7 +30,7 @@ export default function Home() {
       <div className="mt-[200px] px-5">
         <div className="flex flex-wrap justify-center gap-10">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} onCartUpdate={handleCartUpdate} />
+            <ProductCard key={product.id} product={product} onCartUpdate={updateCart} />
           ))}
         </div>
       </div>

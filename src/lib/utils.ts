@@ -16,25 +16,6 @@ export function addToCart(product: Product) {
   localStorage.setItem("cart", JSON.stringify(cartItems));
 }
 
-export function getCartInfo() {
-  if (typeof window === "undefined") return { length: 0, total: 0 };
-
-  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
-  const length = cartItems.reduce((length, product) => length + product.count, 0);
-  const total = cartItems.reduce((total, product) => {
-    return Math.round((total + product.price * product.count) * 100) / 100;
-  }, 0);
-
-  return { length, total };
-}
-
-export function getCartItems() {
-  if (typeof window === "undefined") return [];
-
-  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]") as CartProduct[];
-  return cartItems;
-}
-
 export function lowerCartCount(product: CartProduct) {
   if (typeof window === "undefined") return;
 

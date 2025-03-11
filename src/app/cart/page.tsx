@@ -2,27 +2,10 @@
 
 import Header from "@/components/Header";
 import CartItem from "@/components/CartItem";
-import { useState, useEffect } from "react";
-import { getCartInfo, getCartItems } from "@/lib/utils";
-import { CartInfo, CartProduct } from "@/lib/types";
+import { useCart } from "@/hooks/useCart";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState<CartProduct[]>([]);
-  const [cartInfo, setCartInfo] = useState<CartInfo>({ length: 0, total: 0 });
-
-  useEffect(() => {
-    const items = getCartItems();
-    setCartItems(items);
-    const cartInfo = getCartInfo();
-    setCartInfo(cartInfo);
-  }, []);
-
-  const handleCartUpdate = () => {
-    const items = getCartItems();
-    setCartItems(items);
-    const cartInfo = getCartInfo();
-    setCartInfo(cartInfo);
-  };
+  const { cartItems, cartInfo, updateCart } = useCart();
 
   return (
     <div>
@@ -32,7 +15,7 @@ export default function Cart() {
           <h1 className="text-[35px] mb-10">Cart</h1>
           <div>
             {cartItems.map((item) => (
-              <CartItem key={item.id} product={item} onCartUpdate={handleCartUpdate} />
+              <CartItem key={item.id} product={item} onCartUpdate={updateCart} />
             ))}
           </div>
         </div>
