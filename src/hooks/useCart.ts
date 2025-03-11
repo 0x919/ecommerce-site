@@ -14,7 +14,8 @@ export function useCart() {
     setCartItems(items);
 
     const length = items.reduce((sum, product) => sum + product.count, 0);
-    const total = items.reduce((sum, product) => sum + product.price, 0);
+    let total = items.reduce((sum, product) => sum + product.price, 0);
+    total = Math.round(total * 100) / 100;
     setCartInfo({ length, total });
   }, [setIsClient]);
 
@@ -23,7 +24,8 @@ export function useCart() {
     setCartItems(items);
 
     const length = items.reduce((sum, product) => sum + product.count, 0);
-    const total = items.reduce((sum, product) => sum + product.price, 0);
+    let total = items.reduce((sum, product) => sum + product.price, 0);
+    total = Math.round(total * 100) / 100;
     setCartInfo({ length, total });
   };
 
