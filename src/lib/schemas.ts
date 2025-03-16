@@ -29,3 +29,15 @@ export const loginSchema = Joi.object({
     "string.empty": "Password is required",
   }),
 });
+
+export const createOrderSchema = Joi.object({
+  cartItems: Joi.array()
+    .items(
+      Joi.object({
+        productId: Joi.number().integer().positive().required(),
+        quantity: Joi.number().integer().min(1).required(),
+      })
+    )
+    .min(1)
+    .required(),
+});
