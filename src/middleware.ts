@@ -17,6 +17,9 @@ export default async function middleware(req: NextRequest) {
     if (pathname.startsWith("/api")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     } else {
+      if (["/login", "/register"].includes(pathname)) {
+        return NextResponse.next();
+      }
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
@@ -36,6 +39,10 @@ export default async function middleware(req: NextRequest) {
     response.headers.set("user", JSON.stringify(decoded));
     return response;
   } catch {
+    if (["/login", "/register"].includes(pathname)) {
+      return NextResponse.next();
+    }
+
     if (pathname.startsWith("/api")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     } else {
