@@ -14,6 +14,10 @@ export type CartProductProps = {
   onCartUpdate: () => void;
 };
 
+export type CheckoutProductProps = {
+  product: CartProduct;
+}
+
 export interface DecodedToken {
   id: number;
   email: string;

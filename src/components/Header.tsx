@@ -9,7 +9,7 @@ export default function Header({ cartInfo }: HeaderProps) {
     <header className="navbar bg-base-300">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-2xl font-bold">
-          Navo Store
+          0x919 Store
         </Link>
         <div className="form-control">
           <input type="text" placeholder="Search" className="input input-bordered h-10 w-24 md:w-auto" />
