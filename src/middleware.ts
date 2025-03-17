@@ -31,7 +31,7 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    if (pathname.startsWith("/api/orders") && method === "GET") {
+    if (pathname.startsWith("/api/orders") && (method === "GET" || method === "POST")) {
       const response = NextResponse.next();
       response.headers.set("user", JSON.stringify(decoded));
       return response;
