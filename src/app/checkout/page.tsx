@@ -36,8 +36,8 @@ export default function Checkout() {
   return (
     <div>
       <Header cartInfo={cartInfo} />
-      <div className="p-2 sm:p-10 flex">
-        <div className="bg-base-200 p-5 rounded-lg w-3/4 mr-5 flex flex-col justify-between">
+      <div className="p-2 sm:p-10 flex flex-col sm:flex-row">
+        <div className="bg-base-200 p-5 rounded-lg sm:w-3/4 sm:mr-5 mb-5 sm:mb-0 flex flex-col items-center sm:justify-between">
           <h1 className="text-[35px]">Checkout</h1>
           <div>
             <h1 className="text-red-500 mb-5 text-2xl">{error}</h1>
@@ -46,7 +46,7 @@ export default function Checkout() {
             </button>
           </div>
         </div>
-        <div className="bg-base-200 p-5 rounded-lg w-1/4">
+        <div className="bg-base-200 p-5 rounded-lg sm:w-1/4">
           <div className="flex justify-between">
             <h1 className="text-[25px] mb-10">{cartInfo.length} Items</h1>
             <Link className="text-[25px] cursor-pointer" href="/cart">

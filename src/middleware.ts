@@ -59,7 +59,6 @@ export default async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/cart",
     "/profile",
     "/api/profile",
     "/api/products",
@@ -68,5 +67,6 @@ export const config = {
     "/admin",
     "/login",
     "/register",
+    "/checkout",
   ],
 };
