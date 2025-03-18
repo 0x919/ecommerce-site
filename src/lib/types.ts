@@ -1,4 +1,4 @@
-import { Product } from "@prisma/client";
+import { OrderProduct, Product } from "@prisma/client";
 
 export type ProductProps = {
   product: Product;
@@ -16,7 +16,11 @@ export type CartProductProps = {
 
 export type CheckoutProductProps = {
   product: CartProduct;
-}
+};
+
+export type OrderProductProps = {
+  orderProduct: OrderProduct & { product: Product };
+};
 
 export interface DecodedToken {
   id: number;
