@@ -22,7 +22,7 @@ export default function Checkout() {
         })),
       });
       const orderId = response.data.id;
-      router.push(`/orders/${orderId}`);
+      router.push(`/order/${orderId}`);
     } catch (error) {
       if (error instanceof AxiosError && error.response?.data.error) {
         setError(error.response.data.error || "Something went wrong");
